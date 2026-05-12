@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>湖山分院齋僧體驗活動回饋總結</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #f8f4ee;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 40px;
+}
+
+.pres-wrap {
+  width: 100%;
+  max-width: 860px;
+}
+
+/* Progress */
+.progress-outer {
+  width: 100%;
+  height: 3px;
+  background: #e0d4c0;
+  border-radius: 2px;
+  margin-bottom: 14px;
+}
+.progress-fill {
+  height: 100%;
+  background: #b8864e;
+  border-radius: 2px;
+  transition: width 0.35s ease;
+}
+
+/* Slide container */
+.slide {
+  display: none;
+  width: 100%;
+  background: #fffdf8;
+  border-radius: 18px;
+  border: 1px solid #e2d4bc;
+  box-shadow: 0 4px 24px rgba(160,120,60,0.08);
+  padding: 48px 52px 44px;
+  min-height: 540px;
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+}
+.slide.active { display: flex; }
+
+/* Deco */
+.deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ===== COVER ===== */
+.cover {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(148deg, #fdf7ee 0%, #fff9f4 60%, #f8f2ea 100%);
+}
+.cover .emoji { font-size: 56px; margin-bottom: 20px; line-height: 1; }
+.cover h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #7a4f28;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.cover .sub {
+  font-size: 15px;
+  color: #b08055;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  margin-bottom: 28px;
+}
+.cover .badge {
+  display: inline-block;
+  background: #b8864e;
+  color: #fff;
+  font-size: 14px;
+  padding: 7px 24px;
+  border-radius: 24px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* ===== SECTION HEADER ===== */
+.slide-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.slide-heading {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.slide-rule {
+  width: 40px;
+  height: 2.5px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+/* ===== QUOTE CARDS ===== */
+.qgrid {
+  display: grid;
+  gap: 10px;
+}
+.qgrid-2 { grid-template-columns: 1fr 1fr; }
+.qgrid-1 { grid-template-columns: 1fr; }
+
+.qcard {
+  background: rgba(255,252,245,0.9);
+  border-radius: 10px;
+  padding: 14px 16px;
+  border-left: 3px solid;
+}
+.qcard.full { grid-column: 1 / -1; }
+.qtext {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: #3a2e22;
+  white-space: pre-wrap;
+}
+.qattr {
+  font-size: 11px;
+  margin-top: 8px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+/* highlight block */
+.hblock {
+  background: rgba(255,252,245,0.9);
+  border-radius: 10px;
+  padding: 18px 20px;
+  border-left: 3px solid;
+  margin-bottom: 10px;
+}
+.htext {
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: #3a2e22;
+  white-space: pre-wrap;
+}
+
+/* suggestion cards */
+.scard {
+  background: rgba(255,252,245,0.9);
+  border-radius: 10px;
+  padding: 13px 16px 13px 14px;
+  border-left: 3px solid;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.scard-icon { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+.scard-body { flex: 1; }
+.scard-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+  opacity: 0.75;
+}
+.scard-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #3a2e22;
+  white-space: pre-wrap;
+}
+
+/* stats */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.stat-box {
+  flex: 1;
+  background: rgba(255,252,245,0.85);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 1px solid rgba(180,140,80,0.18);
+}
+.stat-num {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.stat-lbl {
+  font-size: 11.5px;
+  margin-top: 5px;
+  color: #886040;
+  line-height: 1.5;
+}
+
+/* phone section label */
+.phone-section {
+  background: rgba(255,252,245,0.9);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  border-left: 3px solid;
+}
+.phone-q {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+.phone-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #3a2e22;
+  white-space: pre-wrap;
+}
+
+/* tag chips */
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+.tag {
+  font-size: 12px;
+  padding: 4px 13px;
+  border-radius: 14px;
+  font-weight: 500;
+}
+
+/* section divider slide */
+.divider-slide {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(148deg, #fdf7ee 0%, #fff9f4 60%, #f8f2ea 100%);
+}
+.divider-slide .emoji { font-size: 48px; margin-bottom: 18px; }
+.divider-slide h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.divider-slide p {
+  font-size: 15px;
+  color: #9a7050;
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 400px;
+}
+
+/* closing */
+.close-slide {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(148deg, #fdf7ee 0%, #fff9f4 60%, #f8f2ea 100%);
+}
+.close-slide .emoji { font-size: 48px; margin-bottom: 16px; }
+.close-slide h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #7a4f28;
+  margin-bottom: 14px;
+}
+.close-poem {
+  font-size: 16px;
+  line-height: 2.4;
+  color: #9a7050;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+
+/* ===== NAVIGATION ===== */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 0 2px;
+}
+.nav-btn {
+  background: none;
+  border: 1px solid #c8a878;
+  border-radius: 22px;
+  padding: 8px 22px;
+  font-size: 13.5px;
+  color: #8a6030;
+  cursor: pointer;
+  font-family: 'Noto Sans TC', sans-serif;
+  transition: background 0.15s;
+  font-weight: 400;
+}
+.nav-btn:hover { background: rgba(200,168,100,0.1); }
+.nav-btn:disabled { opacity: 0.28; cursor: default; }
+.dots { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center; max-width: 360px; }
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #d8c8a8;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+.dot.active { background: #b8864e; transform: scale(1.35); }
+
+/* slide counter */
+.slide-counter {
+  text-align: center;
+  font-size: 12px;
+  color: #b09878;
+  margin-top: 10px;
+  letter-spacing: 0.06em;
+}
+
+/* color themes */
+.amber .slide-eyebrow, .amber .qattr { color: #a06820; }
+.amber .slide-heading { color: #7a4f18; }
+.amber .slide-rule { background: #d4a040; }
+.amber .qcard { border-color: #d4a040; }
+.amber .hblock { border-color: #d4a040; }
+.amber .scard { border-color: #d4a040; }
+.amber .stat-num { color: #9a6018; }
+.amber .phone-section { border-color: #d4a040; }
+
+.green .slide-eyebrow, .green .qattr { color: #507838; }
+.green .slide-heading { color: #385828; }
+.green .slide-rule { background: #78b858; }
+.green .qcard { border-color: #78b858; }
+.green .hblock { border-color: #78b858; }
+.green .scard { border-color: #78b858; }
+.green .scard-label { color: #507838; }
+.green .stat-num { color: #386828; }
+.green .phone-section { border-color: #78b858; }
+
+.lotus .slide-eyebrow, .lotus .qattr { color: #9a3868; }
+.lotus .slide-heading { color: #782850; }
+.lotus .slide-rule { background: #d06898; }
+.lotus .qcard { border-color: #d06898; }
+.lotus .hblock { border-color: #d06898; }
+.lotus .scard { border-color: #d06898; }
+.lotus .stat-num { color: #8a2858; }
+
+.sky .slide-eyebrow, .sky .qattr { color: #2858a0; }
+.sky .slide-heading { color: #183870; }
+.sky .slide-rule { background: #5088d0; }
+.sky .qcard { border-color: #5088d0; }
+.sky .hblock { border-color: #5088d0; }
+.sky .scard { border-color: #5088d0; }
+.sky .stat-num { color: #1848a0; }
+.sky .phone-section { border-color: #5088d0; }
+
+.teal .slide-eyebrow, .teal .qattr { color: #207060; }
+.teal .slide-heading { color: #105040; }
+.teal .slide-rule { background: #40a888; }
+.teal .qcard { border-color: #40a888; }
+.teal .hblock { border-color: #40a888; }
+.teal .scard { border-color: #40a888; }
+.teal .phone-section { border-color: #40a888; }
+
+.coral .slide-eyebrow, .coral .qattr { color: #a03820; }
+.coral .slide-heading { color: #802810; }
+.coral .slide-rule { background: #e06840; }
+.coral .qcard { border-color: #e06840; }
+.coral .hblock { border-color: #e06840; }
+.coral .scard { border-color: #e06840; }
+.coral .phone-section { border-color: #e06840; }
+
+/* scrollable qgrid for long slides */
+.qscroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+</style>
+</head>
+<body>
+<div class="pres-wrap">
+
+  <div class="progress-outer">
+    <div class="progress-fill" id="prog" style="width:4%"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 1: COVER
+  ══════════════════════════════════════════════════ -->
+  <div class="slide cover active" id="s0">
+    <div class="deco" style="width:200px;height:200px;background:#c89050;opacity:.08;top:-70px;right:-70px;"></div>
+    <div class="deco" style="width:120px;height:120px;background:#d4a860;opacity:.07;bottom:-40px;left:-40px;"></div>
+    <div class="emoji">🪷</div>
+    <h1>湖山分院齋僧體驗活動<br>回饋總結</h1>
+    <div class="sub">2026年5月3日 · 親師生共同參與 · 26份回饋問卷</div>
+    <div class="badge">感恩 · 隨喜 · 共好</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 2: 各組工作概況 — 看見互相支援
+  ══════════════════════════════════════════════════ -->
+  <div class="slide amber" id="s1">
+    <div class="deco" style="width:160px;height:160px;background:#d4a040;opacity:.08;top:-55px;right:-55px;"></div>
+    <div class="slide-eyebrow">Part 1 · 活動回饋 · 01</div>
+    <div class="slide-heading">各組分工與互相支援</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-2">
+        <div class="qcard"><div class="qtext">不論那個組別，大家都互相支援</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">看到了相互支援，非常隨喜</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">大家都歡喜心，合作無間</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">合作無間</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">大家都很互相幫忙</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">各組各司其職，是個規劃完美的活動</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard"><div class="qtext">盡心盡力，圖案為合作</div><div class="qattr">— 運送組</div></div>
+        <div class="qcard"><div class="qtext">隨喜家長、小孩，各司其職，忙裡忙外，很感動。</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">很用心 很棒</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">各家認真</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard full"><div class="qtext">各個盡守本分，非常完美，如有一些需改進，也是讓下一次有進步空間</div><div class="qattr">— 家長</div></div>
+        <div class="qcard full"><div class="qtext">各組家長都很用心配合</div><div class="qattr">— 餐飲組</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 3: 義工廚房 — 動線與感動
+  ══════════════════════════════════════════════════ -->
+  <div class="slide green" id="s2">
+    <div class="deco" style="width:150px;height:150px;background:#78b858;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 1 · 活動回饋 · 02</div>
+    <div class="slide-heading">義工廚房：紅豆大福 × 炒麵</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-1">
+        <div class="hblock"><div class="htext">紅豆大福看到孩子分工協作的默契，炒麵看到爸爸媽媽們平時的手藝，全部動起來一起準備的氛圍，廣供看見用心的承辦對諸佛菩薩供養，轉換一下發心，效果完全不同，大家看了都很歡喜，用餐桌椅場地也是廣供組大家一起擦拭，讓用餐環境更加舒適，出坡兵分三路，希望家長們藉由此活動也能互相熟悉建立革命情感，法師非常慈悲，親自到觀音亭為我們開示，也理解家長與孩子一整天的行程，為一天完美的結行收攝。</div><div class="qattr">— 家長</div></div>
+      </div>
+      <div class="qgrid qgrid-2">
+        <div class="qcard"><div class="qtext">廷祐在拌炒麵時認真的表情讓我印象深刻，孩子們齊心協力推著湯往觀音亭令人動容，最後，出坡去扛磚頭讓我覺得這份業造的很實在。</div><div class="qattr">— 視聽攝影組</div></div>
+        <div class="qcard"><div class="qtext">義工廚房，大福製作流程安排的很順暢，家長小孩分工合作認真的表情，小孩合作將飲品推上觀音亭、圍繞觀音亭專注虔誠的廣供，爸爸們共同搬磚頭的模樣，柏辰媽不厭煩數次檢查義工廚房的廁所、視聽事先用心準備背景音樂</div><div class="qattr">— 家長</div></div>
+        <div class="qcard"><div class="qtext">炒麵還蠻好吃的</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">1. 紅豆大福的備料太厲害了，麻糬好好吃！
+2. 看到冠霖媽媽一個人忙進忙出的備料、善後，太感謝了！下次可以號召一下，大家一起來分工哦！</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">看到廣供品很莊嚴隆重！炒麵組的實在太好吃了😋，大福也製作的很快就完成了！大家真的太厲害👍！</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">恭敬食材注重環境衛生不能只想好玩</div><div class="qattr">— 餐飲組</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 4: 廣供 & 出坡
+  ══════════════════════════════════════════════════ -->
+  <div class="slide lotus" id="s3">
+    <div class="deco" style="width:150px;height:150px;background:#d06898;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 1 · 活動回饋 · 03</div>
+    <div class="slide-heading">廣供莊嚴 × 出坡精神</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-2">
+        <div class="qcard"><div class="qtext">廣供組的花超級美</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">意外都收穫到美麗的後山，來回數趟也不累</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard"><div class="qtext">出坡時看到大大小小的修繕都是由法師及預科班生自己共同完成，非常敬佩</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">隨喜搬磚的爸爸們，來往走了3趟，也不喊累，要不是時間有限，應該還可以再走2趟。</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">出坡－爸爸們大力具足，勇悍承擔搬磚塊，非常隨喜他們！</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">看到大力具足的爸爸們令人讚嘆</div><div class="qattr">— 運送組</div></div>
+        <div class="qcard"><div class="qtext">看到爸爸們歡喜無比搬磚頭</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">冠謙媽不辭辛勞，來來回回。廣供組除了布置壇城外，還整理了周圍環境及桌椅。</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard full"><div class="qtext">這次我本來是餐飲組，臨時調到廣供組，內心也十分歡喜！廣供的資材準備的非常充足，粉紅色的桌巾鋪上去，馬上就感覺無比莊嚴！原本廣供組的媽媽們真的很細心，需要用的資材應有盡有，特別是切好的西瓜有保鮮膜可以保鮮，讓在戶外等待廣供的心情也變得輕鬆許多！</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard full"><div class="qtext">1. 出坡至後山的爸爸、阿公們辛苦了！（建議下次粗重活可以讓國二孩子們來，他們的力氣應該不亞於爸爸了）
+2. 柏辰媽媽、還有三、四個阿嬤們及柏澄、雨澄、振璋都幫忙運餐具至廚房清洗及善後，非常隨喜！
+3. 小森林出坡的孩子，最後只剩四位在努力奮鬥，看到其他同學早就在休息，雖然心裡有點…，但仍堅持到最後，讚！</div><div class="qattr">— 餐飲組</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 5: 令人感動的身影
+  ══════════════════════════════════════════════════ -->
+  <div class="slide amber" id="s4">
+    <div class="deco" style="width:150px;height:150px;background:#d4a040;opacity:.08;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 1 · 活動回饋 · 04</div>
+    <div class="slide-heading">那些令人感動的身影</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-2">
+        <div class="qcard"><div class="qtext">柏辰媽媽很用心善後，柏辰也會一起協助媽媽完成任務，是位孝順的孩子，我很感動！</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">漢國阿姨在活動的前二天就開始準備這些食材，真的非常感謝</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">冠霖爸幫學生挖八噗很認真</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard"><div class="qtext">柏辰媽主動積極調派人手，讓午餐備料迅速完成</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">漢國家很專業！冠霖家很優秀！冠謙家也很讚！
+紘睿家詠竣家廣供組的也都很棒！
+詠安爸、言愷爸也是很優秀👍！
+雨澄阿嬤也很優秀！</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">中午時看到很多幹部犧牲中午的休息時間默默完成善後，內心非常感謝也很感動。</div><div class="qattr">— 視聽攝影組</div></div>
+        <div class="qcard"><div class="qtext">蔡昕庭非常用心的來幫忙切菜，切完菜後又幫忙清洗砧板，清洗完後又緊接著幫忙炒菜，所有的菜都是他掌杓的喔！</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">飲料分裝時，不知是那個帥哥小孩，溫馨提醒，要不要坐椅子，就不用一直蹲著。好貼心~~~</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">詠竣的貼心，在出坡休息時間結束時，會主動回來，詢問需要做什麼？紘睿知道媽媽喜歡他主動勤勞，會積極參與。我看見他試圖讓母親歡喜的心意。</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard"><div class="qtext">菜埔認真有力</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">準備廣供時，有幾位學生推著推車，從山下賣力的把廣供品推到觀音亭。</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">大小菩薩每個人都做清潔工作👍</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">我看到有幾位孩子會幫忙善後洗鍋碗瓢盆，很貼心！</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">家長和學生們有汗水也有笑容</div><div class="qattr">— 廣供組</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 6: 美好的事物
+  ══════════════════════════════════════════════════ -->
+  <div class="slide teal" id="s5">
+    <div class="deco" style="width:150px;height:150px;background:#40a888;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 1 · 活動回饋 · 05</div>
+    <div class="slide-heading">我看到了這些美好的事物</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-2">
+        <div class="qcard"><div class="qtext">護持團隊很用心的辦活動增進彼此培福機會</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">隨喜感謝昕丞家嵩皓家來回載廣供品</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">出坡時看到大大小小的修繕都是由法師及預科班生自己共同完成，非常敬佩</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">帶著歡喜心</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">大小菩薩身累心不累❤️</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">廣供組的花超級美</div><div class="qattr">— 環保組</div></div>
+        <div class="qcard"><div class="qtext">孩子合作推餐</div><div class="qattr">— 廣供組</div></div>
+        <div class="qcard"><div class="qtext">餐飲工作結束後，立馬有人清洗廚具，午餐後的休息時間，有幾位家長默默回到義工廚房繼續善後清潔。</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">大家都很認真付出</div><div class="qattr">— 餐飲組</div></div>
+        <div class="qcard"><div class="qtext">非常吉祥</div><div class="qattr">— 運送組</div></div>
+        <div class="qcard full"><div class="qtext">這是我們第一次到湖山僧院，可以帶著孩子們一同集聚資糧，相當歡喜，也看到家戶們默默的付出與貢獻非常感恩，隨喜</div><div class="qattr">— 餐飲組</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 7: 建議改善（集中一張）
+  ══════════════════════════════════════════════════ -->
+  <div class="slide sky" id="s6">
+    <div class="deco" style="width:150px;height:150px;background:#5088d0;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 1 · 活動回饋 · 06</div>
+    <div class="slide-heading">建議與改善方向（各組彙整）</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-1">
+        <div class="scard"><div class="scard-icon">📋</div><div class="scard-body"><div class="scard-label">餐飲組</div><div class="scard-text">報到時要引導家長廣供品和資材應擺放位置，運送者需了解食材應送何處</div></div></div>
+        <div class="scard"><div class="scard-icon">🍱</div><div class="scard-body"><div class="scard-label">視聽攝影組</div><div class="scard-text">刈包這麼好吃建議下次活動可以再訂餐。</div></div></div>
+        <div class="scard"><div class="scard-icon">🧼</div><div class="scard-body"><div class="scard-label">廣供組</div><div class="scard-text">施作大福時部分孩子的衛生習慣需要糾正比較吉祥</div></div></div>
+        <div class="scard"><div class="scard-icon">📸</div><div class="scard-body"><div class="scard-label">環保組</div><div class="scard-text">大合照可以多拍幾張，要確認相片Ok，可以在剛開始的時候，先解說組別分配跟工作的地點事項</div></div></div>
+        <div class="scard"><div class="scard-icon">🥣</div><div class="scard-body"><div class="scard-label">廣供組</div><div class="scard-text">小組前行細項：有的大福沒包葡萄。中午炒麵不夠吃。或許在炒完麵後，就要評估數量不夠，立即加菜。</div></div></div>
+        <div class="scard"><div class="scard-icon">🧒</div><div class="scard-body"><div class="scard-label">餐飲組</div><div class="scard-text">孩子行前教育組（加強行前衛生與態度教育）</div></div></div>
+        <div class="scard"><div class="scard-icon">🚨</div><div class="scard-body"><div class="scard-label">餐飲組</div><div class="scard-text">建議下回的齋僧品不是直接食用的，因為有發現部份的孩子在製作的過程中，容易有不衛生的行為出現，例如：已戴手套了！但不自覺地就摸了鼻子或伸進去騷癢頭髮，這有衛生疑慮</div></div></div>
+        <div class="scard"><div class="scard-icon">📢</div><div class="scard-body"><div class="scard-label">餐飲組</div><div class="scard-text">雖然有活動的PPT可參考，但還是希望活動之前能有簡單的前行會議（家長連線）先大致了解活動流程或分組分工的細項，特別是孩子在園區也要先大約了解活動流程，這麼殊勝的活動，結果到現場有點一團亂（不知自己是哪一組、要做什麼齋僧、衛生事項…），有點可惜了！
+▷ 廚房：動線混亂或時間太趕，建議下次調整。</div></div></div>
+        <div class="scard"><div class="scard-icon">💡</div><div class="scard-body"><div class="scard-label">廣供組</div><div class="scard-text">建議班級活動讓小孩也可以事先分好組，規劃自己要做的事情，才知道自己要做什麼？才不會沒事做，無聊想玩手機。</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 8: DIVIDER — 手機議題
+  ══════════════════════════════════════════════════ -->
+  <div class="slide divider-slide" id="s7">
+    <div class="deco" style="width:200px;height:200px;background:#78b858;opacity:.07;top:-70px;right:-70px;"></div>
+    <div class="deco" style="width:120px;height:120px;background:#40a888;opacity:.06;bottom:-40px;left:-40px;"></div>
+    <div class="emoji">📵</div>
+    <h2 style="color:#385828;">Part 2<br>手機議題討論</h2>
+    <p>以下是全班親師生<br>對「養機場」與放下手機的真實心聲</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 9: 手機議題 — 贊成/態度（統計視覺化）
+  ══════════════════════════════════════════════════ -->
+  <div class="slide green" id="s8">
+    <div class="deco" style="width:150px;height:150px;background:#78b858;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 2 · 手機議題 · 01</div>
+    <div class="slide-heading">對「不主動提供手機給孩子」的態度</div>
+    <div class="slide-rule"></div>
+
+    <!-- 長條圖區塊 -->
+    <div style="margin-bottom:18px;">
+      <div style="font-size:11px;font-weight:500;color:#507838;letter-spacing:.06em;margin-bottom:12px;">26 份回饋，按立場歸類</div>
+
+      <!-- 非常贊成 -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div style="font-size:12.5px;color:#3a2e22;min-width:190px;line-height:1.4;">
+          非常贊成<br><span style="font-size:11px;color:#888070;">希望孩子多互動交流</span>
+        </div>
+        <div style="flex:1;height:26px;background:#ede8de;border-radius:6px;overflow:hidden;">
+          <div style="width:38%;height:100%;background:#C0DD97;border-radius:6px;display:flex;align-items:center;padding-left:10px;">
+            <span style="font-size:12px;font-weight:500;color:#27500A;">10 人</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#507838;min-width:34px;text-align:right;font-weight:500;">38%</div>
+      </div>
+
+      <!-- 贊成但保留彈性 -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div style="font-size:12.5px;color:#3a2e22;min-width:190px;line-height:1.4;">
+          贊成，但保留彈性<br><span style="font-size:11px;color:#888070;">特殊需求可短暫使用</span>
+        </div>
+        <div style="flex:1;height:26px;background:#ede8de;border-radius:6px;overflow:hidden;">
+          <div style="width:38%;height:100%;background:#97C459;border-radius:6px;display:flex;align-items:center;padding-left:10px;">
+            <span style="font-size:12px;font-weight:500;color:#173404;">10 人</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#507838;min-width:34px;text-align:right;font-weight:500;">38%</div>
+      </div>
+
+      <!-- 中立保留 -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div style="font-size:12.5px;color:#3a2e22;min-width:190px;line-height:1.4;">
+          中立／保留<br><span style="font-size:11px;color:#888070;">各家戶管教方式不同</span>
+        </div>
+        <div style="flex:1;height:26px;background:#ede8de;border-radius:6px;overflow:hidden;">
+          <div style="width:15%;height:100%;background:#EF9F27;border-radius:6px;display:flex;align-items:center;padding-left:10px;">
+            <span style="font-size:12px;font-weight:500;color:#412402;">4 人</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#854F0B;min-width:34px;text-align:right;font-weight:500;">15%</div>
+      </div>
+
+      <!-- 其他觀點 -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+        <div style="font-size:12.5px;color:#3a2e22;min-width:190px;line-height:1.4;">
+          其他觀點／個別回應<br><span style="font-size:11px;color:#888070;">提出具體想法</span>
+        </div>
+        <div style="flex:1;height:26px;background:#ede8de;border-radius:6px;overflow:hidden;">
+          <div style="width:8%;height:100%;background:#B4B2A9;border-radius:6px;display:flex;align-items:center;padding-left:10px;">
+            <span style="font-size:12px;font-weight:500;color:#2C2C2A;">2 人</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#5F5E5A;min-width:34px;text-align:right;font-weight:500;">8%</div>
+      </div>
+    </div>
+
+    <!-- 代表性心聲 -->
+    <div style="font-size:11px;font-weight:500;color:#507838;letter-spacing:.06em;margin-bottom:10px;">代表性心聲</div>
+    <div class="qgrid qgrid-2" style="margin-bottom:14px;">
+      <div class="qcard" style="border-color:#78b858;">
+        <div class="qattr" style="color:#507838;margin-bottom:4px;">非常贊成</div>
+        <div class="qtext">希望孩子多跟家人、同學聊天互動，或參與現場的益智／桌遊活動。</div>
+      </div>
+      <div class="qcard" style="border-color:#97C459;">
+        <div class="qattr" style="color:#507838;margin-bottom:4px;">贊成但保留彈性</div>
+        <div class="qtext">但希望保留彈性，例如有特殊聯絡需求時可短暫使用。</div>
+      </div>
+      <div class="qcard" style="border-color:#EF9F27;">
+        <div class="qattr" style="color:#854F0B;margin-bottom:4px;">中立／保留</div>
+        <div class="qtext">認為這是各家戶的管教方式，順其自然即可。</div>
+      </div>
+      <div class="qcard" style="border-color:#B4B2A9;">
+        <div class="qattr" style="color:#5F5E5A;margin-bottom:4px;">個別觀點</div>
+        <div class="qtext">通常一定是被動給予；善用手機也是師長給予我們重要的課題。</div>
+      </div>
+    </div>
+
+    <!-- 整體氛圍 -->
+    <div class="hblock" style="border-color:#78b858;margin-bottom:0;">
+      <div style="font-size:12px;font-weight:500;color:#507838;margin-bottom:4px;">整體氛圍</div>
+      <div class="htext">約 76% 的家長贊成或非常贊成建立「不主動給孩子手機」的班級默契，顯示大家對親子專注時光的高度認同。</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 10: 手機議題 — 養機場接受度與想法
+  ══════════════════════════════════════════════════ -->
+  <div class="slide coral" id="s9">
+    <div class="deco" style="width:150px;height:150px;background:#e06840;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 2 · 手機議題 · 02</div>
+    <div class="slide-heading">「養機場」接受度與各方想法</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-1">
+        <div class="phone-section"><div class="phone-q">全力支持</div><div class="phone-text">全力支持：我願意交出手機，全程專注參與。（多位家長填寫，含餐飲組、視聽攝影組、環保組、廣供組）</div></div>
+        <div class="phone-section"><div class="phone-q">擔心工作需要</div><div class="phone-text">工作需要（保留手機的理由之一）</div></div>
+        <div class="phone-section"><div class="phone-q">擔心緊急聯繫</div><div class="phone-text">不太支持：擔心緊急聯繫不便，希望讓孩子學習自我克制。</div></div>
+        <div class="phone-section"><div class="phone-q">手機是私人用品</div><div class="phone-text">手機屬於家長私人用品，不適合統一集中保管</div></div>
+        <div class="phone-section"><div class="phone-q">擔心不能拍照</div><div class="phone-text">只是擔心手機集中管理之後沒有手機可以拍照</div></div>
+        <div class="phone-section"><div class="phone-q">希望轉化用途</div><div class="phone-text">使能設計活動讓手機變成活動的工具就太好了，滿足小孩用手機，但不是划短片或玩遊戲</div></div>
+        <div class="phone-section"><div class="phone-q">從親子關係出發</div><div class="phone-text">不太支持，家長需使用手機時為有重要的事要處理。希望讓孩子學習使用手機是當工具使用，而不是利用空檔時間在看社群</div></div>
+        <div class="phone-section"><div class="phone-q">深思熟慮的家長視角</div><div class="phone-text">我會跟孩子分享球類訊息，但他從不跟我拿手機使用，善用手機也是師長給予我們重要的課題。</div></div>
+        <div class="phone-section"><div class="phone-q">難得親子時光</div><div class="phone-text">難得有機會跟孩子相處，我希望能在行程中保留一些空白，讓親子間有時間互動，所以家長努力跟孩子聊天互動</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 11: 替代方案建議
+  ══════════════════════════════════════════════════ -->
+  <div class="slide sky" id="s10">
+    <div class="deco" style="width:150px;height:150px;background:#5088d0;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 2 · 手機議題 · 03</div>
+    <div class="slide-heading">若孩子放下手機——大家建議的替代方案</div>
+    <div class="slide-rule"></div>
+    <div class="qscroll">
+      <div class="qgrid qgrid-1">
+        <div class="scard"><div class="scard-icon">🎲</div><div class="scard-body"><div class="scard-text">準備適合多人互動的益智推理遊戲（如情境猜謎、海龜湯等）。（最多人選）</div></div></div>
+        <div class="scard"><div class="scard-icon">🏃</div><div class="scard-body"><div class="scard-text">提供簡單的體育器材（若場地允許）。</div></div></div>
+        <div class="scard"><div class="scard-icon">🍳</div><div class="scard-body"><div class="scard-text">安排更多實作任務（例如協助善後清洗）。</div></div></div>
+        <div class="scard"><div class="scard-icon">🌟</div><div class="scard-body"><div class="scard-text">以上都可（運送組家長）</div></div></div>
+        <div class="scard"><div class="scard-icon">👨‍👩‍👧</div><div class="scard-body"><div class="scard-text">是否家長太少話題能跟孩子聊天，當個有趣的家長，比給孩子有趣的活動來的重要。（餐飲組家長）</div></div></div>
+        <div class="scard"><div class="scard-icon">📱</div><div class="scard-body"><div class="scard-text">使能設計活動讓手機變成活動的工具就太好了，滿足小孩用手機，但不是划短片或玩遊戲。（運送組）</div></div></div>
+        <div class="scard"><div class="scard-icon">🎨</div><div class="scard-body"><div class="scard-text">請孩子們設計適合父母參加的活動（廣供組家長）</div></div></div>
+        <div class="scard"><div class="scard-icon">👩‍🏫</div><div class="scard-body"><div class="scard-text">邀請班級老師一起同遊。（廣供組家長）</div></div></div>
+        <div class="scard"><div class="scard-icon">📋</div><div class="scard-body"><div class="scard-text">建議班級活動讓小孩也可以事先分好組，規劃自己要做的事情，才知道自己要做什麼？才不會沒事做，無聊想玩手機。（廣供組）</div></div></div>
+        <div class="scard"><div class="scard-icon">💬</div><div class="scard-body"><div class="scard-text">難得有機會跟孩子相處，我希望能在行程中保留一些空白，讓親子間有時間互動，所以家長努力跟孩子聊天互動。（餐飲組）</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SLIDE 12: CLOSING
+  ══════════════════════════════════════════════════ -->
+  <div class="slide close-slide" id="s11">
+    <div class="deco" style="width:200px;height:200px;background:#c89050;opacity:.08;top:-70px;right:-70px;"></div>
+    <div class="deco" style="width:120px;height:120px;background:#d4a860;opacity:.06;bottom:-40px;left:-40px;"></div>
+    <div class="emoji">🙏</div>
+    <h2>感恩每一份付出的心</h2>
+    <div class="close-poem">
+      大小菩薩，身累心不累 ❤️<br>
+      有汗水，也有笑容<br>
+      每一則回饋，都是對下一次更好的期許<br>
+      今日的種種，都是美好的因緣
+    </div>
+    <div class="tag-row" style="justify-content:center;">
+      <span class="tag" style="background:#f5e8d5;color:#9a6030;">餐飲組</span>
+      <span class="tag" style="background:#e8f0e0;color:#4a7830;">環保組</span>
+      <span class="tag" style="background:#f0e8f5;color:#7a3878;">廣供組</span>
+      <span class="tag" style="background:#e5eff8;color:#2860a0;">視聽攝影組</span>
+      <span class="tag" style="background:#fef0e0;color:#9a6020;">運送組</span>
+      <span class="tag" style="background:#f8f0e8;color:#886040;">行政組</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prev-btn" onclick="go(-1)" disabled>← 上一頁</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="go(1)">下一頁 →</button>
+  </div>
+  <div class="slide-counter" id="counter">1 / 12</div>
+</div>
+
+<script>
+const TOTAL = 12;
+let cur = 0;
+
+const dots = document.getElementById('dots');
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dots.appendChild(d);
+}
+
+function goTo(n) {
+  document.getElementById('s'+cur).classList.remove('active');
+  cur = n;
+  document.getElementById('s'+cur).classList.add('active');
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i===cur));
+  document.getElementById('prev-btn').disabled = cur===0;
+  document.getElementById('next-btn').disabled = cur===TOTAL-1;
+  document.getElementById('prog').style.width = ((cur+1)/TOTAL*100).toFixed(1)+'%';
+  document.getElementById('counter').textContent = (cur+1)+' / '+TOTAL;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function go(d) { goTo(cur+d); }
+
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'&&cur<TOTAL-1) goTo(cur+1);
+  if (e.key==='ArrowLeft'&&cur>0) goTo(cur-1);
+});
+</script>
+</body>
+</html>
