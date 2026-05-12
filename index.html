@@ -455,6 +455,63 @@ body {
   .bar-track-rwd { flex: 1; height: 22px; }
   .bar-pct-rwd { min-width: 28px; font-size: 11px; }
 }
+
+/* ===== Cluster Grid（養機場頁） ===== */
+.cluster-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.cluster {
+  background: rgba(255,252,245,0.9);
+  border-radius: 10px;
+  padding: 14px;
+  border-top: 3px solid;
+}
+.cluster-icon { font-size: 18px; margin-bottom: 6px; }
+.cluster-title { font-size: 12.5px; font-weight: 500; margin-bottom: 3px; }
+.cluster-count { font-size: 11px; color: #886040; margin-bottom: 8px; }
+.cluster-voices { display: flex; flex-direction: column; gap: 5px; }
+.voice {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #3a2e22;
+  padding: 7px 9px;
+  background: rgba(240,232,218,0.55);
+  border-radius: 6px;
+}
+
+/* ===== Alt Grid（替代方案數字卡） ===== */
+.alt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.alt-card {
+  background: rgba(255,252,245,0.9);
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+  border: 1px solid rgba(180,140,80,0.18);
+}
+.alt-num {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #185FA5;
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+.alt-label { font-size: 11.5px; line-height: 1.5; color: #886040; }
+
+@media (max-width: 600px) {
+  .cluster-grid { grid-template-columns: 1fr; }
+  .alt-grid { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .alt-num { font-size: 18px; }
+  .alt-label { font-size: 10.5px; }
+}
 </style>
 </head>
 <body>
@@ -684,51 +741,87 @@ body {
   </div>
 
   <!-- ══════════════════════════════════════════════════
-       SLIDE 9-NEW: 手機議題 — 贊成態度統計視覺化（新增）
+       SLIDE 9-NEW: 手機議題 — 養機場接受度（新增）
   ══════════════════════════════════════════════════ -->
-  <div class="slide green" id="s9new">
-    <div class="deco" style="width:150px;height:150px;background:#78b858;opacity:.09;top:-50px;right:-50px;"></div>
-    <div class="slide-eyebrow">Part 2 · 手機議題 · 01 統計</div>
-    <div class="slide-heading">態度分佈總覽</div>
+  <div class="slide coral" id="s9new">
+    <div class="deco" style="width:150px;height:150px;background:#e06840;opacity:.09;top:-50px;right:-50px;"></div>
+    <div class="slide-eyebrow">Part 2 · 手機議題 · 02</div>
+    <div class="slide-heading">「養機場」接受度與全班想法</div>
     <div class="slide-rule"></div>
-    <div style="margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:500;color:#507838;letter-spacing:.06em;margin-bottom:12px;">26 份回饋，按立場歸類</div>
-      <div class="bar-row-rwd">
-        <div class="bar-label-rwd">非常贊成<br><span class="bar-sub">希望孩子多互動交流</span></div>
-        <div class="bar-track-rwd"><div style="width:38%;height:100%;background:#C0DD97;border-radius:6px;display:flex;align-items:center;padding-left:10px;"><span style="font-size:12px;font-weight:500;color:#27500A;">10 人</span></div></div>
-        <div class="bar-pct-rwd" style="color:#507838;">38%</div>
+    <div class="qscroll">
+      <div style="font-size:11px;font-weight:500;color:#a03820;letter-spacing:.06em;margin-bottom:10px;">接受度歸類——各方聲音</div>
+      <div class="cluster-grid">
+        <div class="cluster" style="border-top-color:#639922;">
+          <div class="cluster-icon">🙋</div>
+          <div class="cluster-title" style="color:#27500A;">全力支持（9 人）</div>
+          <div class="cluster-count">願意交出手機，全程專注參與</div>
+          <div class="cluster-voices">
+            <div class="voice">我願意交出手機，全程專注參與。</div>
+          </div>
+        </div>
+        <div class="cluster" style="border-top-color:#EF9F27;">
+          <div class="cluster-icon">📸</div>
+          <div class="cluster-title" style="color:#412402;">擔心拍不了照（1 人）</div>
+          <div class="cluster-count">支持但有實際顧慮</div>
+          <div class="cluster-voices">
+            <div class="voice">只是擔心手機集中管理之後沒有手機可以拍照</div>
+          </div>
+        </div>
+        <div class="cluster" style="border-top-color:#D85A30;">
+          <div class="cluster-icon">📵</div>
+          <div class="cluster-title" style="color:#4A1B0C;">擔心緊急聯繫（6 人）</div>
+          <div class="cluster-count">保留手機的主要原因</div>
+          <div class="cluster-voices">
+            <div class="voice">不太支持：擔心緊急聯繫不便，希望讓孩子學習自我克制。</div>
+            <div class="voice">手機屬於家長私人用品，不適合統一集中保管</div>
+          </div>
+        </div>
+        <div class="cluster" style="border-top-color:#378ADD;">
+          <div class="cluster-icon">💡</div>
+          <div class="cluster-title" style="color:#042C53;">轉化用途的創意提案（3 人）</div>
+          <div class="cluster-count">希望手機成為工具而非娛樂</div>
+          <div class="cluster-voices">
+            <div class="voice">使能設計活動讓手機變成活動的工具就太好了，滿足小孩用手機，但不是划短片或玩遊戲</div>
+            <div class="voice">不太支持，希望讓孩子學習使用手機是當工具使用，而不是利用空檔時間在看社群</div>
+          </div>
+        </div>
       </div>
-      <div class="bar-row-rwd">
-        <div class="bar-label-rwd">贊成，但保留彈性<br><span class="bar-sub">特殊需求可短暫使用</span></div>
-        <div class="bar-track-rwd"><div style="width:38%;height:100%;background:#97C459;border-radius:6px;display:flex;align-items:center;padding-left:10px;"><span style="font-size:12px;font-weight:500;color:#173404;">10 人</span></div></div>
-        <div class="bar-pct-rwd" style="color:#507838;">38%</div>
+      <div style="font-size:11px;font-weight:500;color:#a03820;letter-spacing:.06em;margin-bottom:10px;">若孩子放下手機——最多人認同的替代方案</div>
+      <div class="alt-grid">
+        <div class="alt-card">
+          <div class="alt-num">18+</div>
+          <div class="alt-label">益智推理遊戲<br>（海龜湯、情境猜謎）</div>
+        </div>
+        <div class="alt-card">
+          <div class="alt-num">15+</div>
+          <div class="alt-label">提供體育器材<br>（場地允許時）</div>
+        </div>
+        <div class="alt-card">
+          <div class="alt-num">12+</div>
+          <div class="alt-label">安排更多實作任務<br>（善後、清洗）</div>
+        </div>
       </div>
-      <div class="bar-row-rwd">
-        <div class="bar-label-rwd">中立／保留<br><span class="bar-sub">各家戶管教方式不同</span></div>
-        <div class="bar-track-rwd"><div style="width:15%;height:100%;background:#EF9F27;border-radius:6px;display:flex;align-items:center;padding-left:10px;"><span style="font-size:12px;font-weight:500;color:#412402;">4 人</span></div></div>
-        <div class="bar-pct-rwd" style="color:#854F0B;">15%</div>
+      <div class="hblock" style="border-color:#639922;">
+        <div style="font-size:11px;font-weight:500;color:#3B6D11;margin-bottom:4px;">親子互動的核心反思</div>
+        <div class="htext">是否家長太少話題能跟孩子聊天，當個有趣的家長，比給孩子有趣的活動來的重要。</div>
       </div>
-      <div class="bar-row-rwd">
-        <div class="bar-label-rwd">其他觀點／個別回應<br><span class="bar-sub">提出具體想法</span></div>
-        <div class="bar-track-rwd"><div style="width:8%;height:100%;background:#B4B2A9;border-radius:6px;display:flex;align-items:center;padding-left:8px;"><span style="font-size:12px;font-weight:500;color:#2C2C2A;">2 人</span></div></div>
-        <div class="bar-pct-rwd" style="color:#5F5E5A;">8%</div>
+      <div class="hblock" style="border-color:#378ADD;">
+        <div style="font-size:11px;font-weight:500;color:#185FA5;margin-bottom:4px;">讓孩子也參與設計</div>
+        <div class="htext">請孩子們設計適合父母參加的活動；邀請班級老師一起同遊。</div>
       </div>
-    </div>
-    <div style="font-size:11px;font-weight:500;color:#507838;letter-spacing:.06em;margin-bottom:10px;">代表性心聲</div>
-    <div class="qgrid qgrid-2" style="margin-bottom:12px;">
-      <div class="qcard" style="border-color:#78b858;"><div class="qattr" style="color:#507838;margin-bottom:4px;">非常贊成</div><div class="qtext">希望孩子多跟家人、同學聊天互動，或參與現場的益智／桌遊活動。</div></div>
-      <div class="qcard" style="border-color:#97C459;"><div class="qattr" style="color:#507838;margin-bottom:4px;">贊成但保留彈性</div><div class="qtext">但希望保留彈性，例如有特殊聯絡需求時可短暫使用。</div></div>
-      <div class="qcard" style="border-color:#EF9F27;"><div class="qattr" style="color:#854F0B;margin-bottom:4px;">中立／保留</div><div class="qtext">認為這是各家戶的管教方式，順其自然即可。</div></div>
-      <div class="qcard" style="border-color:#B4B2A9;"><div class="qattr" style="color:#5F5E5A;margin-bottom:4px;">個別觀點</div><div class="qtext">通常一定是被動給予；善用手機也是師長給予我們重要的課題。</div></div>
-    </div>
-    <div class="hblock" style="border-color:#78b858;margin-bottom:0;">
-      <div style="font-size:12px;font-weight:500;color:#507838;margin-bottom:4px;">整體氛圍</div>
-      <div class="htext">約 76% 的家長贊成或非常贊成建立「不主動給孩子手機」的班級默契，顯示大家對親子專注時光的高度認同。</div>
+      <div class="hblock" style="border-color:#EF9F27;">
+        <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:4px;">難得親子空白時間</div>
+        <div class="htext">難得有機會跟孩子相處，我希望能在行程中保留一些空白，讓親子間有時間互動，所以家長努力跟孩子聊天互動。</div>
+      </div>
+      <div class="hblock" style="border-color:#B4B2A9;margin-bottom:0;">
+        <div style="font-size:11px;font-weight:500;color:#5F5E5A;margin-bottom:4px;">善用手機的更深層思考</div>
+        <div class="htext">我會跟孩子分享球類訊息，但他從不跟我拿手機使用，善用手機也是師長給予我們重要的課題。</div>
+      </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════════════════
-       SLIDE 10: 手機議題 — 養機場接受度與想法
+       SLIDE 10: 手機議題 — 養機場接受度與各方想法（原始）
   ══════════════════════════════════════════════════ -->
   <div class="slide coral" id="s9">
     <div class="deco" style="width:150px;height:150px;background:#e06840;opacity:.09;top:-50px;right:-50px;"></div>
